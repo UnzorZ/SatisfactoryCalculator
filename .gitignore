@@ -40,3 +40,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+.idea/discord.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/vcs.xml
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
