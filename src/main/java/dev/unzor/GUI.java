@@ -1,5 +1,7 @@
 package dev.unzor;
 
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -67,6 +69,7 @@ public class GUI extends javax.swing.JFrame {
         cantidadSpinner = new javax.swing.JSpinner();
         addToTableButton = new javax.swing.JButton();
         deleteFromTableButton = new javax.swing.JButton();
+        juntarRepeticionesButton = new javax.swing.JButton();
         materialLabel = new javax.swing.JLabel();
         cantidadLabel = new javax.swing.JLabel();
         tierLabel = new javax.swing.JLabel();
@@ -501,7 +504,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Menas");
 
-        materialComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mena 1", "Mena 2" }));
+        materialComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mena 1", "Mena 2"}));
 
         tierComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pura", "Normal", "Impura"}));
 
@@ -528,6 +531,13 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        juntarRepeticionesButton.setText("Juntar repeticiones");
+        juntarRepeticionesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                juntarRepeticionesButtonActionPerformed(evt);
+            }
+        });
+
         materialLabel.setForeground(new java.awt.Color(255, 255, 255));
         materialLabel.setText("Material");
 
@@ -539,7 +549,6 @@ public class GUI extends javax.swing.JFrame {
 
         tablaMenas.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null}
                 },
                 new String [] {
                         "Material", "Cantidad", "Tier", "Overclock"
@@ -624,6 +633,8 @@ public class GUI extends javax.swing.JFrame {
                                                                                 .addComponent(addToTableButton)))
                                                                 .addGap(64, 64, 64))
                                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                                .addComponent(juntarRepeticionesButton)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(deleteFromTableButton)
                                                                 .addContainerGap())))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -656,7 +667,8 @@ public class GUI extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(cantidadporminutoLabel)
                                         .addComponent(cantidadporminutoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(deleteFromTableButton))
+                                        .addComponent(deleteFromTableButton)
+                                        .addComponent(juntarRepeticionesButton))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(calcularPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 12, Short.MAX_VALUE))
@@ -1018,6 +1030,9 @@ public class GUI extends javax.swing.JFrame {
         Util.printDebug("Cantidad: " + cantidadSpinner.getValue());
         Util.printDebug("Tier: " + tierComboBox.getSelectedItem());
         Util.printDebug("Cantidad de overclock: " + overclockComboBox.getSelectedItem());
+
+        Util.addStuffToTable(tablaMenas ,materialComboBox.getSelectedItem().toString(), cantidadSpinner.getValue().toString(), tierComboBox.getSelectedItem().toString(), overclockComboBox.getSelectedItem().toString());
+        Util.printTableContent(tablaMenas, 1);
     }
 
     private void calcularLabelMouseClicked(java.awt.event.MouseEvent evt) {
@@ -1034,6 +1049,11 @@ public class GUI extends javax.swing.JFrame {
 
     private void deleteFromTableButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+    }
+
+    private void juntarRepeticionesButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        System.out.println("Juntar repeticiones");
+        Util.compareTableContent(tablaMenas);
     }
 
     /**
@@ -1106,6 +1126,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JLabel XLabel;
     private javax.swing.JButton addToTableButton;
+    private javax.swing.JButton juntarRepeticionesButton;
     private javax.swing.JLabel calcularLabel;
     private javax.swing.JPanel calcularPanel;
     private javax.swing.JLabel cantidadLabel;

@@ -17,6 +17,14 @@ public class Main {
 
         System.out.println("Starting...");
         startGui();
+
+        Recipe recipeObject = new Recipe();
+        recipeObject.setCosteDeCaterio(1);
+        recipeObject.setCosteDeCobre(2);
+        recipeObject.setCosteDeHierro(3);
+        System.out.println(recipeObject.getCosteDeCaterio());
+        System.out.println(recipeObject.getCosteDeCobre());
+        System.out.println(recipeObject.getCosteDeHierro());
     }
 
     public static void startGui() {
