@@ -1,19 +1,24 @@
-package dev.unzor;
+package dev.unzor.Util;
+
+import dev.unzor.Constants;
+import dev.unzor.GUI_old;
+import dev.unzor.Objects.Recipe;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class Util {
-    static JComboBox<String> comboBox = GUI.materialComboBox;
+public class GeneralUtil {
+    static JComboBox<String> comboBox = GUI_old.materialComboBox;
 
     /**
      * @author Unzor
      * @method arrayToStringConverter
      * @param menas: Array de strings
-     * Convierte un array de Strings en un String
+     * @description: Convierte un array de Strings en un String
      */
     public static void arrayToStringConverter(ArrayList<String> menas) {
         String[] string = menas.toArray(new String[menas.size()]);
@@ -28,7 +33,7 @@ public class Util {
      * @author Unzor
      * @method: printDebug
      * @param message: Mensaje a imprimir
-     * Imprime un mensaje de debug si la variable debug es true
+     * @description: Imprime un mensaje de debug si la variable debug es true
      */
     public static void printDebug(String message) {
         if (Constants.debug) {
@@ -44,7 +49,7 @@ public class Util {
      * @param cantidad: cantidad de mena a añadir
      * @param tier: tier de la mena a añadir
      * @param overclock: overclock del minero a añadir
-     * Añade una fila a la tabla de menas
+     * @description: añade una fila a la tabla de menas
      */
     public static void addStuffToTable(JTable tabla, String mena, String cantidad, String tier, String overclock) {
         // Obtener el modelo de datos de la tabla
@@ -54,9 +59,7 @@ public class Util {
         Object[] rowData = {mena, cantidad, tier, overclock};
 
         // Agregar la nueva fila al modelo de datos
-
         model.addRow(rowData);
-
     }
 
     /**
@@ -64,7 +67,7 @@ public class Util {
      * @method: printTableContent
      * @param table: tabla de la que se va a imprimir el contenido
      * @param tablerowtoprint: fila de la que se va a imprimir el contenido
-     * Imprime el contenido de la tabla
+     * @description: Imprime el contenido de la tabla
      */
     public static void printTableContent(JTable table, int tablerowtoprint) {
         // Este string builder se usa para almacenar el contenido de la tabla en el final del metodo
@@ -115,7 +118,7 @@ public class Util {
      * @author Unzor
      * @method: compareTableContent
      * @param table: tabla de la que se va a comparar el contenido
-     * Comprara cada fila de la tabla para comprobar que no haya filas repetidas. Si las hay, las eliminará y sumará la cantidad
+     * @description: Comprara cada fila de la tabla para comprobar que no haya filas repetidas. Si las hay, las eliminará y sumará la cantidad
      * de la fila repetida a la fila original para que no haya filas repetidas
      */
     public static void compareTableContent(JTable table) {
@@ -170,10 +173,53 @@ public class Util {
      * @method: stringToInt
      * @param string: string que se va a convertir a int
      * @return int: devuelve el string convertido a int
-     * Convierte un string a int
+     * @description: Convierte un string a int
      */
     public static int stringToInt(String string) {
         int num = Integer.parseInt(string);
         return num;
+    }
+
+    /**
+     @author Unzor
+     @method printIngredients
+     @param hashMap: un objeto de tipo Map que contiene los ingredientes y sus cantidades
+     @description Este método imprime una tabla con los ingredientes y sus cantidades recibidos como parámetro.
+     La tabla se muestra en formato de tabla y utiliza caracteres especiales para hacerla más legible.
+     La tabla se muestra en orden alfabético y se ordena por el nombre de los ingredientes. */
+    public static void printIngredients(Map<String, Integer> hashMap) {
+        System.out.println("Tabla de ingredientes");
+        System.out.println("+--------------------------+---------+");
+        System.out.println("|          Nombre          | Cantidad|");
+        System.out.println("+--------------------------+---------+");
+
+        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+            String nombre = entry.getKey();
+            int cantidad = entry.getValue();
+            System.out.printf("| %-24s | %7d |\n", nombre, cantidad);
+        }
+
+        System.out.println("+--------------------------+---------+");
+    }
+
+    /**
+     @author Unzor
+     @method printHashMapTable
+     @param hashMap: un objeto de tipo Map que contiene las recetas y sus claves
+     @description Este método imprime una tabla con las recetas y sus claves recibidas como parámetro.
+     La tabla se muestra en formato de tabla y utiliza caracteres especiales para hacerla más legible.
+     La tabla se muestra en orden alfabético y se ordena por la clave de las recetas. */
+    public static void printHashMapTable(Map<String, Recipe> hashMap) {
+        System.out.println("+---------------------+---------+");
+        System.out.println("|        Clave        |  Valor  |");
+        System.out.println("+---------------------+---------+");
+
+        for (Map.Entry<String, Recipe> entry : hashMap.entrySet()) {
+            String key = entry.getKey();
+            Recipe value = entry.getValue();
+            System.out.printf("| %-19s | %7d |\n", key, value);
+        }
+
+        System.out.println("+---------------------+---------+");
     }
 }
