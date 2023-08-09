@@ -1,7 +1,7 @@
 package dev.unzor.Util;
 
 import dev.unzor.Constants;
-import dev.unzor.GUI_old;
+import dev.unzor.Deprecated.GUI_old;
 import dev.unzor.Objects.Recipe;
 
 import javax.swing.*;
@@ -107,11 +107,18 @@ public class GeneralUtil {
         * @param tablerow es la fila que quieres imprimir
         **/
 
+        GeneralUtil.printDebug("Imprimiendo fila " + tablerowtoprint);
+
+        if (tablerowtoprint > rows.size()-1) {
+            GeneralUtil.printDebug("La fila que quieres imprimir no existe");
+            return;
+        }
+
         List<Object> firstRow = rows.get(tablerowtoprint);
         for (Object value : firstRow) {
             sb.append(value + " ");
         }
-        System.out.println("Primera fila: " + sb);
+        GeneralUtil.printDebug("Primera fila: " + sb);
     }
 
     /**
