@@ -1,21 +1,12 @@
 package dev.unzor;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.sun.javafx.iio.ImageLoader;
 import dev.unzor.GUI.CraftGUI;
-import dev.unzor.GUI.LoadingMessage;
-import dev.unzor.JSON.JSONUtil;
-import dev.unzor.Objects.Recipe;
 import dev.unzor.Util.GeneralUtil;
-import dev.unzor.Util.RecipeFilter;
-import dev.unzor.Util.RecipeTablePrinter;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 
 public class Main {
 
@@ -35,25 +26,8 @@ public class Main {
                     break;
             }
         }
-        Map<String, Recipe> recipes = JSONUtil.getRecipeMap();
-
-        Map<String, Integer> ingredients = recipes.get("alt-nuclear-fuel-rod").getIngredients();
-
-        System.out.println(recipes.get("alt-nuclear-fuel-rod").toString());
-        GeneralUtil.printIngredients(ingredients);
-
-        RecipeTablePrinter.printRecipeTable(RecipeFilter.filterRecipesByName(recipes, "alt-nuclear-fuel-rod"));
-
-        System.out.println("Starting...");
-
+        GeneralUtil.printDebug("Starting...");
         startGui();
-        //Recipe recipeObject = new Recipe();
-        //recipeObject.setCosteDeLingotesAcero(1);
-        //recipeObject.setCosteDeLingotesCobre(2);
-        //recipeObject.setCosteDeLingotesHierro(3);
-        //System.out.println(recipeObject.getCosteDeLingotesAcero());
-        //System.out.println(recipeObject.getCosteDeLingotesCobre());
-        //System.out.println(recipeObject.getCosteDeLingotesHierro());
     }
 
     /**
@@ -77,16 +51,5 @@ public class Main {
             craftgui.setVisible(true);
         });
 
-    }
-
-    public static void restart() {
-        String jarPath = System.getProperty("user.dir") + "\\SatisfactoryCraftingCalculator.jar";
-        System.out.println("Restarting...");
-        try {
-            Runtime.getRuntime().exec("java -jar " + jarPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.exit(0);
     }
 }

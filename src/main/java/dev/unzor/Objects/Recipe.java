@@ -25,19 +25,6 @@ public class Recipe {
         image_url = url;
     }
 
-    private final String name;
-    private final String keyname;
-    private final Map<String, Integer> ingredients;
-    private final Map<String, Integer> product;
-    private String image_url;
-    public Recipe(String name, String keyname, Map<String, Integer> ingredients, Map<String, Integer> product, String image_url) {
-        this.name = name;
-        this.keyname = keyname;
-        this.ingredients = ingredients;
-        this.product = product;
-        this.image_url = image_url;
-    }
-
     public String toString() {
         return "Name: " + name +
                 ", Keyname: " + keyname +
@@ -45,6 +32,19 @@ public class Recipe {
                 ", Product: " + product +
                 ", Image: " + image_url;
 
+    }
+    private final String name;
+    private final String keyname;
+    private final Map<String, Integer> ingredients;
+    private final Map<String, Integer> product;
+    private String image_url;
+
+    public Recipe(String name, String keyname, Map<String, Integer> ingredients, Map<String, Integer> product, String image_url) {
+        this.name = name;
+        this.keyname = keyname;
+        this.ingredients = ingredients;
+        this.product = product;
+        this.image_url = image_url;
     }
 
 

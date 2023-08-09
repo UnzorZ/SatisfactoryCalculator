@@ -2,8 +2,6 @@ package dev.unzor.GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class LoadingMessage {
     private JDialog loadingDialog;
@@ -24,14 +22,6 @@ public class LoadingMessage {
         loadingDialog.getContentPane().add(contentPanel);
         loadingDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         loadingDialog.setVisible(true);
-    }
-
-    public void simulateLoading() {
-        try {
-            Thread.sleep(2000); // Simula una carga de 2 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void hideLoadingDialog() {
