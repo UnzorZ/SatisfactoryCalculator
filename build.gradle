@@ -19,6 +19,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation group: 'com.formdev', name: 'flatlaf', version: '1.1.2'
+    implementation 'com.formdev:flatlaf-intellij-themes:3.1.1'
 }
 
 test {
@@ -27,8 +28,11 @@ test {
 
 shadowJar {
     archiveBaseName.set('SatisfactoryCrafter')
-    archiveClassifier.set('v')
+    archiveClassifier.set('Beta')
     archiveVersion.set('1.0')
+}
+task copyResources(type: Copy) {
+    from "${projectDir}/src/main/resources"
 }
 
 compileJava.options.encoding = 'UTF-8'
