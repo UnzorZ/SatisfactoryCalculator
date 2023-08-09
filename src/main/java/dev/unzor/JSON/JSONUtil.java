@@ -1,11 +1,11 @@
 package dev.unzor.JSON;
 
 import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
+import dev.unzor.Constants;
 import dev.unzor.Objects.Recipe;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,9 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JSONUtil {
-    static Path configPath = Paths.get("src/main/resources/recipesData.json");
-    static File configFile = configPath.toFile();
-
     /**
      * @author Unzor
      * @return Un mapa que contiene las recetas cargadas desde el archivo.
@@ -28,8 +25,8 @@ public class JSONUtil {
      *              adecuado para ser procesado por el método parseRecipes.
      */
     public static Map<String, Recipe> getRecipeMap() throws IOException {
-        InputStreamReader reader = new InputStreamReader(Files.newInputStream(configFile.toPath()));
-        Map<String, Recipe> recipeMap = parseRecipes(reader);
+        String json = readJsonResource("recipesData.json");
+        Map<String, Recipe> recipeMap = parseRecipes(json);
 
         return recipeMap;
     }
@@ -44,10 +41,10 @@ public class JSONUtil {
      * Finalmente, se agrega el objeto Recipe a un Map de tipo Recipe con la clave como clave y el objeto Recipe como valor.
      * El Map resultante contiene todas las recetas y sus claves.
      */
-    static Map<String, Recipe> parseRecipes(InputStreamReader json) throws IOException {
+    public static Map<String, Recipe> parseRecipes(String json) throws IOException {
         Map<String, Recipe> recipeMap = new HashMap<>();
-        Gson gson = new Gson();
 
+        Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
         JsonArray recipesArray = jsonObject.getAsJsonArray("recipes");
 
@@ -71,10 +68,47 @@ public class JSONUtil {
             int productAmount = jproductArray.get(1).getAsInt();
             productMap.put(productName, productAmount);
 
-            Recipe recipe = new Recipe(name, keyName, ingredientsMap, productMap);
+            Recipe recipe = new Recipe(name, keyName, ingredientsMap, productMap, getImage(keyName));
             recipeMap.put(keyName, recipe);
         }
 
         return recipeMap;
+    }
+    public static String getImage(String keyName) throws IOException {
+        if (keyName.contains("alt-")) {
+            keyName = keyName.replace("alt-", "");
+        }
+        String json = readJsonResource("itemsData.json");
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+        JsonArray itemsArray = jsonObject.getAsJsonArray("items");
+
+        for (JsonElement image : itemsArray) {
+            JsonObject itemObject = image.getAsJsonObject();
+            String itemKeyName = itemObject.get("key_name").getAsString();
+            if (itemKeyName.equals(keyName)) {
+                return itemObject.get("image").getAsString();
+            }
+        }
+
+        return Constants.errorImage; // Reemplaza con el valor correcto
+    }
+
+    public static String readJsonResource(String resourceName) {
+        try {
+            InputStream inputStream = JsonReader.class.getResourceAsStream("/" + resourceName);
+            if (inputStream != null) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder content = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    content.append(line);
+                }
+                return content.toString();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
