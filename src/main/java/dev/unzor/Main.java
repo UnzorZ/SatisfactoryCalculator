@@ -1,20 +1,26 @@
 package dev.unzor;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
+import com.sun.javafx.iio.ImageLoader;
 import dev.unzor.GUI.CraftGUI;
+import dev.unzor.GUI.LoadingMessage;
 import dev.unzor.JSON.JSONUtil;
 import dev.unzor.Objects.Recipe;
 import dev.unzor.Util.GeneralUtil;
 import dev.unzor.Util.RecipeFilter;
 import dev.unzor.Util.RecipeTablePrinter;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 public class Main {
 
     static {
+        //FlatMaterialDarkerIJTheme.setup();
         FlatDarculaLaf.install();
     }
 
@@ -39,13 +45,8 @@ public class Main {
         RecipeTablePrinter.printRecipeTable(RecipeFilter.filterRecipesByName(recipes, "alt-nuclear-fuel-rod"));
 
         System.out.println("Starting...");
-        //startGui();
 
-        CraftGUI craftGUI = new CraftGUI();
-        craftGUI.setVisible(true);
-
-
-
+        startGui();
         //Recipe recipeObject = new Recipe();
         //recipeObject.setCosteDeLingotesAcero(1);
         //recipeObject.setCosteDeLingotesCobre(2);
@@ -70,8 +71,22 @@ public class Main {
         int alturapantalla = tamanoPantalla.height;
         int anchurapantalla = tamanoPantalla.width;
 
-        GUI_old gui = new GUI_old();
-        gui.setBounds(anchurapantalla/4, alturapantalla/4, 1050, 650);
-        gui.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            CraftGUI craftgui = new CraftGUI();
+            craftgui.setBounds(anchurapantalla/4, alturapantalla/4, 1160, 650);
+            craftgui.setVisible(true);
+        });
+
+    }
+
+    public static void restart() {
+        String jarPath = System.getProperty("user.dir") + "\\SatisfactoryCraftingCalculator.jar";
+        System.out.println("Restarting...");
+        try {
+            Runtime.getRuntime().exec("java -jar " + jarPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
     }
 }
