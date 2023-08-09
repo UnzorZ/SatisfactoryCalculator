@@ -1,4 +1,4 @@
-package dev.unzor;
+package dev.unzor.Deprecated;
 
 import dev.unzor.Util.GeneralUtil;
 
