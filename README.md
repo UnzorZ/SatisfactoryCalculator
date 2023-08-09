@@ -6,7 +6,7 @@
 
 
 <h2>🛠️ Requirements </h2>
-The only requirement is having [Java](https://www.java.com/es/download/) installed in your computer or a interpreter like [IntelliJ](https://www.jetbrains.com/idea/).
+The only requirement is having [Java](https://www.java.com/es/download/) installed in your computer or a interpreter like [IntelliJ](https://www.jetbrains.com/idea).
 
 
 <h2>Project Screenshots:</h2>
